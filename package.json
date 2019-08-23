@@ -1,0 +1,35 @@
+{
+  "name": "o2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "o2.js",
+  "scripts": {
+    "start": "node o2.js",
+    "start-dev": "nodemon dist/o2/o2.js dev",
+    "qsync": "node save.js /dist/o2 root@Omega-498f.local:~/test",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rlwhatley3/o2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rlwhatley3/o2/issues"
+  },
+  "homepage": "https://github.com/rlwhatley3/o2#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "o2-gpio": "~1.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.2",
+    "gulp": "^4.0.0",
+    "gulp-typescript": "^5.0.1",
+    "nodemon": "^1.19.1",
+    "rsync": "^0.6.1",
+    "typescript": "^3.5.3"
+  }
+}
