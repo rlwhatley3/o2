@@ -20,7 +20,9 @@ const app = express();
 console.log('env', process.env.NODE_ENV);
 
 app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(bodyParser.json());
+
 app.use(express.static(__dirname + '/public/dist'));
 
 const refreshSocketsPins = (sockets: any[]) => {
@@ -67,7 +69,6 @@ router.put('/socket/:socket_id/toggle',(req: any, res: any) => {
 
 	const socket = db.sockets.find((s:any) => s.id == socket_id);
 
-	console.log('socket: ', db.sockets, socket_id, socket);
 	if(!socket) return res.status(404).json({ error: 'Socket not found!', code: 404 });
 
 	if(socket.type === 'static') return res.status(403).json({ error: 'Static sockets are always on, and cannot be toggled off.'})
