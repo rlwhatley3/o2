@@ -4,8 +4,8 @@
   "description": "",
   "main": "o2.js",
   "scripts": {
-    "start": "node o2.js",
-    "start-dev": "nodemon dist/o2/o2.js dev",
+    "start": "NODE_ENV=prod node o2.js",
+    "start-dev": "NODE_ENV=dev nodemon dist/o2/o2.js",
     "qsync": "node save.js /dist/o2 root@Omega-498f.local:~/test",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

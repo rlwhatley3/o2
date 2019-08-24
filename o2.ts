@@ -11,21 +11,21 @@ const { Group } = require('./lib/models/Group.js');
 
 const { DB } = require('./lib/poc_db/db.js');
 
-const ENV = process.argv[2] || 'prod';
-
-const db = new DB(ENV);
+const db = new DB();
 
 const port = 8888;
 
 const app = express();
 
+console.log('env', process.env.NODE_ENV);
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public/dist'));
 
 const refreshSocketsPins = (sockets: any[]) => {
 	sockets.forEach(rs => {
-		if(rs.pin) {
+		if(rs && rs.pin && rs.pin.get && process.env.NODE_ENV === 'prod') {
 			rs.pin.get();
 		}
 	});
@@ -62,6 +62,20 @@ router.post('/layout', (req:any, res:any) => {
 	res.sendStatus(200);
 });
 
+router.put('/socket/:socket_id/toggle',(req: any, res: any) => {
+	const { socket_id } = req.params;
+
+	const socket = db.sockets.find((s:any) => s.id == socket_id);
+
+	console.log('socket: ', db.sockets, socket_id, socket);
+	if(!socket) return res.status(404).json({ error: 'Socket not found!', code: 404 });
+
+	if(socket.type === 'static') return res.status(403).json({ error: 'Static sockets are always on, and cannot be toggled off.'})
+	socket.toggle();
+	const ret = socket.pin;
+	res.json(ret);
+});
+
 app.use(router);
 
 app.use(function(err: any, req: any, res:any, next:any) {
@@ -80,7 +94,7 @@ app.listen(port, (err:any) => {
 	console.log(`server running on port ${port}`);
 });
 
-export {}; //typescript: https://stackoverflow.com/questions/40900791/cannot-redeclare-block-scoped-variable-in-unrelated-files
+export {}; // typescript: https://stackoverflow.com/questions/40900791/cannot-redeclare-block-scoped-variable-in-unrelated-files
 
 
 

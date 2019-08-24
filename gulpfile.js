@@ -24,7 +24,7 @@ gulp.task('codebase', () => {
 
 gulp.task('public', () => {
 	return gulp
-		.src('./public/*', { base: 'other' })
+		.src('./public/dist/**/*', { base: 'other' })
 		.pipe(gulp.dest(DEST + '/o2'));
 });
 

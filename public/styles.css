@@ -27,6 +27,7 @@
 .group {
 	display: inline-block;
 	vertical-align: middle;
+	border: 3px solid black;
 }
 
 .socket {
@@ -36,6 +37,18 @@
 	display: block;
 }
 
+.socket-double {
+
+}
+
+.socket-single {
+	border: 1px solid red;
+}
+
 .socket:hover {
 	background: #555;
+}
+
+.active {
+	background-color: green;
 }

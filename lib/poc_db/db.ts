@@ -7,10 +7,8 @@ class DB {
 	sockets: Array<any>;
 	defaultSockets: Array<any>;
 
-	constructor(env: any) {
-		if(env !== 'dev') {
-			this.setup();
-		}
+	constructor() {
+		this.setup();
 	}
 
 	setup() {
@@ -34,7 +32,9 @@ class DB {
 
 		this.groups = [g1, g2, g3, g4, g5, g6];
 
-		this.sockets = [].concat.apply([], this.groups.map(g => g.sockets));
+		this.sockets = [].concat.apply([], this.groups.map(g => {
+			return g.sockets.map((s:any) => { return { ...s, group_id: g.id } });
+		}));
 
 		this.groups.forEach(group => {
 			let script = `\n## GROUP ${group.id} ## \n`;
@@ -43,7 +43,7 @@ class DB {
 				script += `\n     Socket: ${socket.id},`;
 				if(socket.type === 'static') {
 					script += ` a static socket that always provides power.`;
-				} else {
+				} else if(process.env.NODE_ENV === 'prod') {
 					const pinValue = pin ? pin.get() : 0;
 					const onOff = pinValue === 0 ? 'Powered' : 'Unpowered';
 					script += ` a volatile socket that could be either on or off. It should currently be ${ onOff }.`;
@@ -56,7 +56,6 @@ class DB {
 
 	}
 }
-
 
 module.exports = { DB };
 
