@@ -59,3 +59,22 @@ Run output wires of the relay boxes to their relevant sockets (be sure to use ea
 On the pcb board, attach 2.54mm pins to the board, and wire them to the omega2 gpio pins. Since this is a relay the pull up/down on the gpio's will cause them to trigger. This means that on boot, if any of the pins used manipulated by a boot sequence, it will cause the relays to trigger, which is bad. In order to avoid this, I use 0,2,3,18,19 gpio's from the omega2, as they don't get manipulated at boot. That means that I only have 5 to use for the purpose of a relay :( The real solution here to use all 8 would be to create a mux/demux circuit which would utilize 6 gpio's, but would be immune to boot time antics b/c of a stored state in the circuit. I'm not doing that here, its beyond the scope of my purpose for this project, 5 options will do fine.
 
 ```
+
+### dev instructions
+`npm install`
+`gulp`
+`npm start-dev`
+
+if changes are made to the vue application in the public folder:
+in public folder use`vue build app.vue`
+in o2 folder: `gulp`
+
+sync to omega: `npm run qsync`
+the destination will need to be set up in the package.json as the second argument to the save.js call
+
+
+
+
+
+
+

@@ -1,2 +1,4 @@
 /node_modules/*
 /dist/*
+/public/node_modules/*
+/public/package-lock.json
